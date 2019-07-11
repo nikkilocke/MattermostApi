@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\BaseCampApi\license.txt">
+    <None Include="..\license.txt">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
