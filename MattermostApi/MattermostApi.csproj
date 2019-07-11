@@ -9,6 +9,10 @@
     <Copyright>(c) 2019 Trumphurst Ltd.</Copyright>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
     <PackageTags>Mattermost Api C#</PackageTags>
+    <PackageProjectUrl>https://github.com/nikkilocke/MattermostApi</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/nikkilocke/MattermostApi</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

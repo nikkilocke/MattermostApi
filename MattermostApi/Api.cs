@@ -472,6 +472,10 @@ namespace MattermostApi {
 			}
 		}
 
+		/// <summary>
+		/// Build a JObject from a response
+		/// </summary>
+		/// <param name="uri">To store in the MetaData</param>
 		async Task<JObject> parseJObjectFromResponse(string uri, HttpResponseMessage result) {
 			JObject j = null;
 			string data = await result.Content.ReadAsStringAsync();
