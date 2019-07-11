@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Trumphurst Ltd.</Authors>
+    <Company>Trumphurst Ltd.Trumphurst Ltd.</Company>
+    <Description>C# Api to Mattermost</Description>
+    <Copyright>(c) 2019 Trumphurst Ltd.</Copyright>
+    <PackageLicenseFile>license.txt</PackageLicenseFile>
+    <PackageTags>Mattermost Api C#</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MimeMapping" Version="1.0.1.12" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\BaseCampApi\license.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
