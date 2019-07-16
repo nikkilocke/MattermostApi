@@ -10,7 +10,7 @@ There is a test project (for net core only) which also demonstrates usage.
 
 In order to use the Mattermost API you need to register your application with the relevant Mattermost server - [see instructions](https://docs.mattermost.com/developer/oauth-2-0-applications.html). This returns a Client Id and Client Secret. When registering, you have to provide a redirect uri for the OAuth2 authorisation process. For simple use, provide something like http://localhost:9999 (choose another port number if you like).
 
-This information has to be provided in an object that implements the [ISettings](../master/MattermostApi/Settings.cs) interface, which is then used to create a MattermostApi instance. A Settings class which imnplements this interface is provided, to save you work. This provides a static Load method, reads the settings from *LocalApplicationData*/MattermostApi/Settings.json. On a Windows 10 machine, *LocalApplicationData* is `C:\Users\<USER>\AppData\Local`, on Linux it is `~user/.local/share`.
+This information has to be provided in an object that implements the [ISettings](../master/MattermostApi/Settings.cs) interface, which is then used to create a MattermostApi instance. A Settings class which implements this interface is provided, to save you work. This provides a static Load method, reads the settings from *LocalApplicationData*/MattermostApi/Settings.json. On a Windows 10 machine, *LocalApplicationData* is `C:\Users\<USER>\AppData\Local`, on Linux it is `~user/.local/share`.
 
 ## Testing
 
