@@ -17,10 +17,12 @@ using System.Diagnostics;
 namespace MattermostApi {
 	public class Api : IDisposable {
 		HttpClient _client;
+		CookieContainer _cookies;
 
 		public Api(ISettings settings) {
 			Settings = settings;
-			_client = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = false });
+			_cookies = new CookieContainer();
+			_client = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = false, CookieContainer = _cookies });
 			_client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 			_client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/html"));
 			_client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
@@ -55,9 +57,11 @@ namespace MattermostApi {
 
 		/// <summary>
 		/// Function to wait for a connection to the RedirectUri, extract the code from the Get parameters and return it.
-		/// Default version listens for a request and parses the paraneter.
+		/// First parameter is this Api.
+		/// Second parameter is the expected state value
+		/// Default version listens for a request and parses the parameter.
 		/// </summary>
-		public Func<Api, Task<string>> WaitForRedirect = waitForRedirect;
+		public Func<Api, string, Task<string>> WaitForRedirect = waitForRedirect;
 
 		/// <summary>
 		/// Log messages will be passed to this handler
@@ -246,12 +250,14 @@ namespace MattermostApi {
 		/// Then exchanges the code for a Token, and updates Settings with the Token.
 		/// </summary>
 		public async Task LoginAsync() {
+			string state = Guid.NewGuid().ToString();
 			OpenBrowser(AddGetParams(Settings.ServerUri + "oauth/authorize", new {
 				response_type = "code",
 				client_id = Settings.ClientId,
-				redirect_uri = Settings.RedirectUri
+				redirect_uri = Settings.RedirectUri,
+				state
 			}));
-			string code = await WaitForRedirect(this);
+			string code = await WaitForRedirect(this, state);
 			Dictionary<string, string> parms = new Dictionary<string, string>();
 			parms["grant_type"] = "authorization_code";
 			parms["client_id"] = Settings.ClientId;
@@ -535,7 +541,7 @@ namespace MattermostApi {
 		/// <summary>
 		/// Default <see cref="WaitForRedirect"/>
 		/// </summary>
-		static async Task<string> waitForRedirect(Api api) {
+		static async Task<string> waitForRedirect(Api api, string state) {
 			return await Task.Run(delegate () {
 				IPHostEntry ipHost = Dns.GetHostEntry(api.Settings.RedirectUri.Host);
 				IPAddress ipAddr = ipHost.AddressList[0];
@@ -592,10 +598,14 @@ Content-Type: text/html; charset=UTF-8
 							// for a new Client Connection 
 							clientSocket.Shutdown(SocketShutdown.Both);
 							clientSocket.Close();
-							Match m = Regex.Match(data.Split('\n')[0], "code=([^& ]+)");
+							string query = data.Split('\n')[0];
+							Match m = Regex.Match(query, "code=([^& ]+)");
 
-							if (m.Success)
+							if (m.Success) {
+								if (!string.IsNullOrEmpty(state) && !query.Contains("state=" + state))
+									throw new ApplicationException("OAuth2 state parameter doesn't match");
 								return m.Groups[1].Value;
+							}
 						}
 					}
 				}

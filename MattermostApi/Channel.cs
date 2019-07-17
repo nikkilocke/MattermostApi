@@ -38,7 +38,6 @@ namespace MattermostApi {
 
 	public class FileInfo : ApiEntryWithId {
 		public string user_id;
-		public DateTime delete_at;
 		public string name;
 		public string extension;
 		public int size;
