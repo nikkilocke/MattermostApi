@@ -55,6 +55,12 @@ namespace MattermostApi {
 		string AccessToken { get; set; }
 
 		/// <summary>
+		/// Login with username and password returns this token, which is then used to access the api
+		/// every time.
+		/// </summary>
+		string CsrfToken { get; set; }
+
+		/// <summary>
 		/// Authorisation returns this token, which is then used to refresh the access token without having to login
 		/// every time.
 		/// </summary>
@@ -130,6 +136,11 @@ namespace MattermostApi {
 		/// every time.
 		/// </summary>
 		public string AccessToken { get; set; }
+		/// <summary>
+		/// Login with username and password returns this token, which is then used to access the api
+		/// every time.
+		/// </summary>
+		public string CsrfToken { get; set; }
 		/// <summary>
 		/// Authorisation returns this token, which is then used to refresh the access token without having to login
 		/// every time.

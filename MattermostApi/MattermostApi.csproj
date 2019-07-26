@@ -12,8 +12,8 @@
     <PackageProjectUrl>https://github.com/nikkilocke/MattermostApi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nikkilocke/MattermostApi</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Security improvement: OAuth2 sets and checks a GUID state parameter.</PackageReleaseNotes>
-    <Version>1.0.3</Version>
+    <PackageReleaseNotes>Set CSRF cookie so login with username and password can PUT, DELETE and POST.</PackageReleaseNotes>
+    <Version>1.0.4</Version>
   </PropertyGroup>
 
   <ItemGroup>

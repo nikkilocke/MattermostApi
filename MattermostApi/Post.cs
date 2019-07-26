@@ -6,11 +6,11 @@ using Newtonsoft.Json.Linq;
 
 namespace MattermostApi {
 	public class PostData : ApiEntryBase {
-		public JObject[] embeds;
-		public JObject[] emojis;
+		public JToken[] embeds;
+		public JToken[] emojis;
 		public FileInfo[] files;
-		public JObject images;
-		public JObject[] reactions;
+		public JToken images;
+		public JToken[] reactions;
 	}
 
 	public class PostUpdate : ApiEntryBase {
@@ -19,7 +19,7 @@ namespace MattermostApi {
 		public string message;
 		public string[] file_ids;
 		public bool? has_reactions;
-		public JObject props;
+		public JToken props;
 	}
 
 	public class CreatePostData {
@@ -29,7 +29,7 @@ namespace MattermostApi {
 		public List<string> file_ids;
 		public string message;
 		public DateTime? create_at;
-		public JObject props;
+		public JToken props;
 	}
 
 	public class PostQuery : ListRequest {
@@ -66,7 +66,7 @@ namespace MattermostApi {
 		public string original_id;
 		public string message;
 		public string type;
-		public JObject props;
+		public JToken props;
 		public string hashtag;
 		public string[] filenames;
 		public string[] file_ids;

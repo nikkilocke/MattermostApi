@@ -74,7 +74,7 @@ namespace MattermostApi {
 		public string auth_service;
 		public string password;
 		public string locale;
-		public JObject props;
+		public JToken props;
 		public NotifyProps notify_props;
 	}
 
@@ -89,7 +89,7 @@ namespace MattermostApi {
 		public string roles;
 		public string locale;
 		public NotifyProps notify_props;
-		public JObject props;
+		public JToken props;
 		public DateTime last_password_update;
 		public DateTime last_picture_update;
 		public int failed_attempts;

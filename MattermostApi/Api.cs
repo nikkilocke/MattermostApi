@@ -234,9 +234,11 @@ namespace MattermostApi {
 				if (result.Headers.TryGetValues("Token", out IEnumerable<string> values)) {
 					string token = values.FirstOrDefault();
 					if(!string.IsNullOrEmpty(token)) {
+						Cookie c = _cookies.GetCookies(Settings.ServerUri)["MMCSRF"];
 						updateToken(new Token() {
 							access_token = token,
-							expires_in = Settings.LoginExpiryTime
+							expires_in = Settings.LoginExpiryTime,
+							csrf_token = c?.Value
 						});
 					}
 				}
@@ -300,6 +302,8 @@ namespace MattermostApi {
 			Settings.AccessToken = token.access_token;
 			if (!string.IsNullOrEmpty(token.refresh_token))
 				Settings.RefreshToken = token.refresh_token;
+			if (!string.IsNullOrEmpty(token.csrf_token))
+				Settings.CsrfToken = token.csrf_token;
 			try {
 				Settings.TokenExpires = DateTime.Now.AddSeconds(token.expires_in);
 			} catch {
@@ -413,6 +417,8 @@ namespace MattermostApi {
 					var message = disposeMe.Add(new HttpRequestMessage(method, uri));
 					if (!string.IsNullOrEmpty(Settings.AccessToken))
 						message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
+					if (!string.IsNullOrEmpty(Settings.CsrfToken))
+						message.Headers.Add("X-CSRF-Token", Settings.CsrfToken);
 					message.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 					message.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("text/html"));
 					message.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
@@ -651,6 +657,7 @@ Content-Type: text/html; charset=UTF-8
 		public string token_type;
 		public string scope;
 		public string refresh_token;
+		public string csrf_token;
 		public int expires_in;
 	}
 

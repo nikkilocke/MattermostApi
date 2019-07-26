@@ -100,6 +100,18 @@ for (int bitIndex = 0; bitIndex < bytes.Length * 8; bitIndex += 5) {
 		}
 	}
 	[TestClass]
+	public class BugTests : TestBase {
+		[TestMethod]
+		public void Bug() {
+			if (!Settings.DestructiveTests)
+				return;
+			RunTest(Api.LoginAsync(Settings.Login, Settings.Password));
+			Team t = RunTest(Team.GetById(Api, Settings.TestTeam));
+			Channel c = RunTest(Channel.Create(Api, t.id, "wibble99", "Wibble 99", false, "purpose", "description"));
+			RunTest(c.Delete(Api));
+		}
+	}
+	[TestClass]
 	public class TeamTests : TestBase {
 		[TestMethod]
 		public void GetTeams() {
