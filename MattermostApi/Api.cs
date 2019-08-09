@@ -289,7 +289,7 @@ namespace MattermostApi {
 			});
 			Log(result.ToString());
 			Token token = result.ToObject<Token>();
-			if (!string.IsNullOrEmpty(token.access_token))
+			if (string.IsNullOrEmpty(token.access_token))
 				throw new ApiException("No access token returned", result);
 			updateToken(token);
 		}

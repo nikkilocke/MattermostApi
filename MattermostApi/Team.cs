@@ -97,5 +97,18 @@ namespace MattermostApi {
 				user_id
 			});
 		}
+
+		public async Task UpdateRoles(Api api, string user_id, string roles) {
+			await api.PutAsync(Api.Combine("teams", id, "members", user_id, "roles"), null, new {
+				roles
+			});
+		}
+
+		public async Task UpdateRoles(Api api, string userId, bool scheme_admin, bool scheme_user = true) {
+			await api.PutAsync(Api.Combine("teams", id, "members", userId, "schemeRoles"), null, new {
+				scheme_admin,
+				scheme_user
+			});
+		}
 	}
 }
