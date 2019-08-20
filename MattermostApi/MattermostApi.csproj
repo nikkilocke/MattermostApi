@@ -12,8 +12,8 @@
     <PackageProjectUrl>https://github.com/nikkilocke/MattermostApi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nikkilocke/MattermostApi</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Added update scheme-derived roles</PackageReleaseNotes>
-    <Version>1.0.5</Version>
+    <PackageReleaseNotes>Added static AddUser methods to Team and Channel</PackageReleaseNotes>
+    <Version>1.0.6</Version>
   </PropertyGroup>
 
   <ItemGroup>

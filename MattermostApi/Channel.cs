@@ -99,7 +99,11 @@ namespace MattermostApi {
 		}
 
 		public async Task<UserInChannel> AddUser(Api api, string user_id, string post_root_id = null) {
-			return await api.PostAsync<UserInChannel>(Api.Combine("channels", id, "members"), null, new {
+			return await AddUser(api, id, user_id, post_root_id);
+		}
+
+		static public async Task<UserInChannel> AddUser(Api api, string channel_id, string user_id, string post_root_id = null) {
+			return await api.PostAsync<UserInChannel>(Api.Combine("channels", channel_id, "members"), null, new {
 				user_id,
 				post_root_id
 			});

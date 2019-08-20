@@ -92,8 +92,12 @@ namespace MattermostApi {
 		}
 
 		public async Task<UserInTeam> AddUser(Api api, string user_id) {
-			return await api.PostAsync<UserInTeam>(Api.Combine("teams", id, "members"), null, new {
-				team_id = id,
+			return await AddUser(api, id, user_id);
+		}
+
+		static public async Task<UserInTeam> AddUser(Api api, string team_id, string user_id) {
+			return await api.PostAsync<UserInTeam>(Api.Combine("teams", team_id, "members"), null, new {
+				team_id,
 				user_id
 			});
 		}
