@@ -45,9 +45,9 @@ namespace MattermostApi {
 
 	public class TeamForUser : ApiEntryBase {
 		public string id;
-		public DateTime create_at;
-		public DateTime update_at;
-		public DateTime delete_at;
+		public DateTime? create_at;
+		public DateTime? update_at;
+		public DateTime? delete_at;
 		public string display_name;
 		public string name;
 		public string description;
@@ -55,7 +55,7 @@ namespace MattermostApi {
 		public string type;
 		public string allowed_domains;
 		public string invite_id;
-		public bool allow_open_invite;
+		public bool? allow_open_invite;
 		public string company_name;
 		public string scheme_id;
 		public string group_constrained;
@@ -78,25 +78,41 @@ namespace MattermostApi {
 		public NotifyProps notify_props;
 	}
 
+	public class Preference : ApiEntryBase {
+		public string user_id;
+		public string category;
+		public string name;
+		public string value;
+
+		public Preference() {
+		}
+
+		public Preference(string category, string name, string value) {
+			this.category = category;
+			this.name = name;
+			this.value = value;
+		}
+	}
+
 	public class User : ApiEntryWithId {
 		public string username;
 		public string first_name;
 		public string last_name;
 		public string nickname;
 		public string email;
-		public bool email_verified;
+		public bool? email_verified;
 		public string auth_service;
 		public string roles;
 		public string locale;
 		public NotifyProps notify_props;
 		public JToken props;
-		public DateTime last_password_update;
-		public DateTime last_picture_update;
-		public int failed_attempts;
-		public bool mfa_active;
+		public DateTime? last_password_update;
+		public DateTime? last_picture_update;
+		public int? failed_attempts;
+		public bool? mfa_active;
 		public TimeZone timezone;
 		public string terms_of_service_id;
-		public DateTime terms_of_service_create_at;
+		public DateTime? terms_of_service_create_at;
 
 		public static async Task<ApiList<User>> GetAll(Api api, GetUsersQuery query = null) {
 			return await api.GetAsync<ApiList<User>>("users", query);
@@ -162,5 +178,13 @@ namespace MattermostApi {
 		public async Task<UnreadMessageCount> GetUnreadMessages(Api api, string channel_id) {
 			return await api.GetAsync<UnreadMessageCount>(Api.Combine("users", id, "channels", channel_id, "unread"));
 		}
+
+		static public async Task SetPreference(Api api, string user_id, params Preference [] preferences) {
+			foreach (Preference p in preferences)
+				p.user_id = user_id;
+			await api.PutAsync(Api.Combine("users", user_id, "preferences"), null, preferences);
+		}
+
+
 	}
 }

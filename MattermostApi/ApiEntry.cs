@@ -12,16 +12,16 @@ namespace MattermostApi {
 		static readonly DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
 		public override bool CanConvert(Type objectType) {
-			return objectType == typeof(DateTime);
+			return objectType == typeof(DateTime) || objectType == typeof(DateTime?);
 		}
 
 		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
-			var t = (long)reader.Value;
-			return t == 0 ? DateTime.MinValue : epoch.AddMilliseconds(t);
+			var t = (long?)reader.Value;
+			return t == null ? (DateTime?)null : t == 0 ? DateTime.MinValue : epoch.AddMilliseconds((long)t);
 		}
 
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
-			long msec = value == null ? 0 : (long)((DateTime)value - epoch).TotalMilliseconds;
+			long? msec = value == null ? (long?)null : (long)((DateTime)value - epoch).TotalMilliseconds;
 			writer.WriteValue(msec);
 		}
 	}
@@ -253,7 +253,9 @@ namespace MattermostApi {
 		/// Override for the odd list return that doesn't use pages.
 		/// </summary>
 		public virtual ApiList<T> Convert(JObject j) {
-			return j.ConvertToObject<ApiList<T>>();
+			ApiList<T> result = j.ConvertToObject<ApiList<T>>();
+			result.Request = Request;
+			return result;
 		}
 
 	}
