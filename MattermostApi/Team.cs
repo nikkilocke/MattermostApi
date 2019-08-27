@@ -39,6 +39,13 @@ namespace MattermostApi {
 				page = new ListRequest();
 			return await api.GetAsync<ApiList<Team>>("teams", page);
 		}
+
+		static async public Task<ApiList<Team>> GetTeamsForUser(Api api, string userId, ListRequest page = null) {
+			if (page == null)
+				page = new ListRequest();
+			return await api.GetAsync<ApiList<Team>>(Api.Combine("users", userId, "teams"), page);
+		}
+
 		static async public Task<Team> GetById(Api api, string id) {
 			return await api.GetAsync<Team>(Api.Combine("teams", id));
 		}
