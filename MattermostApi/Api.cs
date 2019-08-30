@@ -455,10 +455,10 @@ namespace MattermostApi {
 						Log($"Sent -> {(Settings.LogRequest > 1 ? message.ToString() : message.RequestUri.ToString())}:{content}");
 					result = await _client.SendAsync(message);
 					if (Settings.LogResult > 1)
-						Log("Received -> {result}");
+						Log($"Received -> {result}");
 					if (!result.IsSuccessStatusCode) {
-						Error("Message -> {message}:{content}");
-						Error("Response -> {result}");
+						Error($"Message -> {message}:{content}");
+						Error($"Response -> {result}");
 					}
 					switch (result.StatusCode) {
 						case HttpStatusCode.Found:      // Redirect
