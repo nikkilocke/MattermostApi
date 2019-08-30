@@ -74,6 +74,11 @@ namespace MattermostApi {
 		public event LogHandler LogMessage;
 
 		/// <summary>
+		/// Event receives all log messages (to, for example, save them to file or display them to the user)
+		/// </summary>
+		public event LogHandler ErrorMessage;
+
+		/// <summary>
 		/// Post to the Api, returning an object
 		/// </summary>
 		/// <typeparam name="T">The object type expected</typeparam>
@@ -327,20 +332,18 @@ namespace MattermostApi {
 		/// Log a message to trace and, if present, to the LogMessage event handlers
 		/// </summary>
 		public void Log(string message) {
+			message = "Mattermost log:" + message;
 			System.Diagnostics.Trace.WriteLine(message);
 			LogMessage?.Invoke(message);
 		}
 
 		/// <summary>
-		/// Log a message to trace and, if present, to the LogMessage event handlers.
-		/// Works like TextWriter.WriteLine or String.Format
+		/// Log a message to trace and, if present, to the ErrorMessage event handlers
 		/// </summary>
-		public void Log(string format, params object[] args) {
-			try {
-				Log(string.Format(format, args));
-			} catch (Exception ex) {
-				Log("Exception logging " + format + "\n" + ex);
-			}
+		public void Error(string message) {
+			message = "Mattermost error:" + message;
+			System.Diagnostics.Trace.WriteLine(message);
+			ErrorMessage?.Invoke(message);
 		}
 
 		/// <summary>
@@ -449,15 +452,13 @@ namespace MattermostApi {
 					int backoff = 500;
 					int delay;
 					if (Settings.LogRequest > 0)
-						Log("Sent -> {0}:{1}", Settings.LogRequest > 1 ? message.ToString() : message.RequestUri.ToString(), content);
+						Log($"Sent -> {(Settings.LogRequest > 1 ? message.ToString() : message.RequestUri.ToString())}:{content}");
 					result = await _client.SendAsync(message);
 					if (Settings.LogResult > 1)
-						Log("Received -> {0}", result);
+						Log("Received -> {result}");
 					if (!result.IsSuccessStatusCode) {
-						if (Settings.LogRequest < 1)
-							Log("Message -> {0}:{1}", message.ToString(), content);
-						if (Settings.LogResult < 1)
-							Log("Response -> {0}", result);
+						Error("Message -> {message}:{content}");
+						Error("Response -> {result}");
 					}
 					switch (result.StatusCode) {
 						case HttpStatusCode.Found:      // Redirect

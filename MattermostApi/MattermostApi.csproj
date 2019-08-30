@@ -12,8 +12,8 @@
     <PackageProjectUrl>https://github.com/nikkilocke/MattermostApi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nikkilocke/MattermostApi</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Added GetTeamsForUser</PackageReleaseNotes>
-    <Version>1.0.11</Version>
+    <PackageReleaseNotes>Separate Log and Error streams</PackageReleaseNotes>
+    <Version>1.0.12</Version>
   </PropertyGroup>
 
   <ItemGroup>
