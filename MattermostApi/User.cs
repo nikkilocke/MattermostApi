@@ -149,6 +149,12 @@ namespace MattermostApi {
 			return await api.PostAsync<User>("users", null, user);
 		}
 
+		public static async Task<User> Create(Api api, string teamInvite, UserCreateInfo user) {
+			return await api.PostAsync<User>("users", new {
+				iid = teamInvite
+			}, user);
+		}
+
 		public async Task<User> Update(Api api) {
 			return await api.PutAsync<User>(Api.Combine("users", id), null, this);
 		}
@@ -157,8 +163,12 @@ namespace MattermostApi {
 			await api.DeleteAsync(Api.Combine("users", id));
 		}
 
+		public static async Task<ApiList<TeamForUser>> GetTeams(Api api, string userId, ListRequest request = null) {
+			return await api.GetAsync<ApiList<TeamForUser>>(Api.Combine("users", userId, "teams"), request);
+		}
+
 		public async Task<ApiList<TeamForUser>> GetTeams(Api api, ListRequest request = null) {
-			return await api.GetAsync<ApiList<TeamForUser>>(Api.Combine("users", id, "teams"), request);
+			return await GetTeams(api, id, request);
 		}
 
 		public async Task UpdateRoles(Api api, string channel_id, string roles) {

@@ -72,6 +72,14 @@ namespace MattermostApi {
 		}
 
 		/// <summary>
+		/// Convert Object to JToken.
+		/// Note Enums are converted as strings, and Dates as Unix msec timestamps.
+		/// </summary>
+		public static JToken ToJToken(this object o) {
+			return o is JToken ? o as JToken : JToken.FromObject(o, _serializer);
+		}
+
+		/// <summary>
 		/// Convert JToken to Object.
 		/// Note Enums are converted as strings, and Dates as Unix msec timestamps.
 		/// </summary>
@@ -177,7 +185,7 @@ namespace MattermostApi {
 	public class ListRequest : ApiEntryBase {
 		public int page;
 		public int per_page = 60;
-		public JObject PostParameters;
+		public JToken PostParameters;
 	}
 
 	public class ApiList : ApiEntry {

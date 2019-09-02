@@ -89,7 +89,7 @@ namespace MattermostApi {
 			JObject j = await PostAsync(application, getParameters, postParameters);
 			if (typeof(ApiList).IsAssignableFrom(typeof(T))) {
 				JObject r = (getParameters == null ? (object)new ListRequest() : getParameters).ToJObject();
-				r["PostParameters"] = postParameters.ToJObject();
+				r["PostParameters"] = postParameters.ToJToken();
 				j["Request"] = r;
 			}
 			return convertTo<T>(j);

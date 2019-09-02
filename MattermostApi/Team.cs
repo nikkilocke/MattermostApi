@@ -68,8 +68,20 @@ namespace MattermostApi {
 			await api.DeleteAsync(Api.Combine("teams", id));
 		}
 
+		static async public Task<ApiList<UserInTeam>> GetMembers(Api api, string teamId, ListRequest request = null) {
+			return await api.GetAsync<ApiList<UserInTeam>>(Api.Combine("teams",teamId, "members"), request);
+		}
+
 		async public Task<ApiList<UserInTeam>> GetMembers(Api api, ListRequest request = null) {
-			return await api.GetAsync<ApiList<UserInTeam>>(Api.Combine("teams", id, "members"), request);
+			return await GetMembers(api, id, request);
+		}
+
+		static async public Task<ApiList<UserInTeam>> GetMembersByIds(Api api, string teamId, ListRequest request, params string [] userIds) {
+			return await api.PostAsync<ApiList<UserInTeam>>(Api.Combine("teams", teamId, "members", "ids"), request, userIds);
+		}
+
+		static async public Task<ApiList<UserInTeam>> GetMembersByIds(Api api, string teamId, params string[] userIds) {
+			return await GetMembersByIds(api, teamId, null, userIds);
 		}
 
 		public async Task<Channel> CreateChannel(Api api, string name, string display_name, bool closed = false, string purpose = null, string header = null) {

@@ -12,8 +12,10 @@
     <PackageProjectUrl>https://github.com/nikkilocke/MattermostApi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nikkilocke/MattermostApi</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Separate Log and Error streams</PackageReleaseNotes>
-    <Version>1.0.13</Version>
+    <PackageReleaseNotes>Add User.Create with team invite
+Add static User.GetTeams
+Add Team.GetMembersByIds</PackageReleaseNotes>
+    <Version>1.0.16</Version>
   </PropertyGroup>
 
   <ItemGroup>

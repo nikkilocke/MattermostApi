@@ -103,12 +103,15 @@ for (int bitIndex = 0; bitIndex < bytes.Length * 8; bitIndex += 5) {
 	public class BugTests : TestBase {
 		[TestMethod]
 		public void Bug() {
-			if (!Settings.DestructiveTests)
-				return;
 			RunTest(Api.LoginAsync(Settings.Login, Settings.Password));
-			Team t = RunTest(Team.GetById(Api, Settings.TestTeam));
-			Channel c = RunTest(Channel.Create(Api, t.id, "wibble99", "Wibble 99", false, "purpose", "description"));
-			RunTest(c.Delete(Api));
+			var l = RunTest(User.Search(Api, "basecamp_bot"));
+			var bcb = l.List.First();
+			var team = RunTest(Team.GetByName(Api, "UK"));
+			RunTest(Team.AddUser(Api, team.id, bcb.id));
+			RunTest(Team.AddUser(Api, team.id, bcb.id));
+			l = RunTest(User.Search(Api, "xrukadmin"));
+			var admin = l.List.First();
+			RunTest(Team.AddUser(Api, team.id, admin.id));
 		}
 	}
 	[TestClass]
@@ -123,6 +126,11 @@ for (int bitIndex = 0; bitIndex < bytes.Length * 8; bitIndex += 5) {
 			var t = Team.GetById(Api, Settings.TestTeam).Result;
 			var l = RunTest(t.GetMembers(Api));
 			Assert.IsTrue(l.All(Api).Any(l => l.user_id == Settings.AdminUser));
+		}
+		[TestMethod]
+		public void GetUsersForTeamById() {
+			var t = Team.GetById(Api, Settings.TestTeam).Result;
+			var l = RunTest(Team.GetMembersByIds(Api, t.id, "149rq73htfrxjf5mec1dbs4jfe", "18sztdqg9irzmxj45imdstc1fy", "18sztdqg9irzmxj45imdstc1fx"));
 		}
 		[TestMethod]
 		public void GetTeamByName() {
