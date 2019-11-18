@@ -113,17 +113,25 @@ namespace MattermostApi {
 			await api.DeleteAsync(Api.Combine("channels", id, "members", user_id));
 		}
 
-		public async Task UpdateRoles(Api api, string user_id, string roles) {
-			await api.PutAsync(Api.Combine("channels", id, "members", user_id, "roles"), null, new {
+		static public async Task UpdateRoles(Api api, string channel_id, string user_id, string roles) {
+			await api.PutAsync(Api.Combine("channels", channel_id, "members", user_id, "roles"), null, new {
 				roles
 			});
 		}
 
-		public async Task UpdateRoles(Api api, string userId, bool scheme_admin, bool scheme_user = true) {
-			await api.PutAsync(Api.Combine("channels", id, "members", userId, "schemeRoles"), null, new {
+		public async Task UpdateRoles(Api api, string user_id, string roles) {
+			await UpdateRoles(api, id, user_id, roles);
+		}
+
+		static public async Task UpdateRoles(Api api, string channel_id, string userId, bool scheme_admin, bool scheme_user = true) {
+			await api.PutAsync(Api.Combine("channels", channel_id, "members", userId, "schemeRoles"), null, new {
 				scheme_admin,
 				scheme_user
 			});
+		}
+
+		public async Task UpdateRoles(Api api, string userId, bool scheme_admin, bool scheme_user = true) {
+			await UpdateRoles(api, id, userId, scheme_admin, scheme_user);
 		}
 
 		public async Task UpdateNotifications(Api api, string user_id, ChannelNotifyProps notifications) {

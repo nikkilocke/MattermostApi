@@ -12,10 +12,8 @@
     <PackageProjectUrl>https://github.com/nikkilocke/MattermostApi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nikkilocke/MattermostApi</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Add User.Create with team invite
-Add static User.GetTeams
-Add Team.GetMembersByIds</PackageReleaseNotes>
-    <Version>1.0.16</Version>
+    <PackageReleaseNotes>Add static UpdateRoles methods on Team and Channel</PackageReleaseNotes>
+    <Version>1.0.17</Version>
   </PropertyGroup>
 
   <ItemGroup>

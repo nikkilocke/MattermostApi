@@ -121,17 +121,25 @@ namespace MattermostApi {
 			});
 		}
 
-		public async Task UpdateRoles(Api api, string user_id, string roles) {
-			await api.PutAsync(Api.Combine("teams", id, "members", user_id, "roles"), null, new {
+		static public async Task UpdateRoles(Api api, string team_id, string user_id, string roles) {
+			await api.PutAsync(Api.Combine("teams", team_id, "members", user_id, "roles"), null, new {
 				roles
 			});
 		}
 
-		public async Task UpdateRoles(Api api, string userId, bool scheme_admin, bool scheme_user = true) {
-			await api.PutAsync(Api.Combine("teams", id, "members", userId, "schemeRoles"), null, new {
+		public async Task UpdateRoles(Api api, string user_id, string roles) {
+			await UpdateRoles(api, id, user_id, roles);
+		}
+
+		static public async Task UpdateRoles(Api api, string team_id, string userId, bool scheme_admin, bool scheme_user = true) {
+			await api.PutAsync(Api.Combine("teams", team_id, "members", userId, "schemeRoles"), null, new {
 				scheme_admin,
 				scheme_user
 			});
+		}
+
+		public async Task UpdateRoles(Api api, string userId, bool scheme_admin, bool scheme_user = true) {
+			await UpdateRoles(api, id, userId, scheme_admin, scheme_user);
 		}
 	}
 }
