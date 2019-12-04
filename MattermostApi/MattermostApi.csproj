@@ -13,7 +13,7 @@
     <RepositoryUrl>https://github.com/nikkilocke/MattermostApi</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <PackageReleaseNotes>Add static UpdateRoles methods on Team and Channel</PackageReleaseNotes>
-    <Version>1.0.17</Version>
+    <Version>1.0.19</Version>
   </PropertyGroup>
 
   <ItemGroup>

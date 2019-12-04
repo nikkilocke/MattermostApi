@@ -119,13 +119,13 @@ for (int bitIndex = 0; bitIndex < bytes.Length * 8; bitIndex += 5) {
 		[TestMethod]
 		public void GetTeams() {
 			var l = RunTest(Team.GetAll(Api));
-			Assert.IsTrue(l.All(Api).Any(l => l.id == Settings.TestTeam));
+			Assert.IsTrue(l.All(Api).Any(l1 => l1.id == Settings.TestTeam));
 		}
 		[TestMethod]
 		public void GetUsersForTeam() {
 			var t = Team.GetById(Api, Settings.TestTeam).Result;
 			var l = RunTest(t.GetMembers(Api));
-			Assert.IsTrue(l.All(Api).Any(l => l.user_id == Settings.AdminUser));
+			Assert.IsTrue(l.All(Api).Any(l1 => l1.user_id == Settings.AdminUser));
 		}
 		[TestMethod]
 		public void GetUsersForTeamById() {
@@ -145,7 +145,7 @@ for (int bitIndex = 0; bitIndex < bytes.Length * 8; bitIndex += 5) {
 		[TestMethod]
 		public void SearchTeams() {
 			var l = RunTest(Team.Search(Api, Settings.TestTeamName));
-			Assert.IsTrue(l.All(Api).Any(l => l.id == Settings.TestTeam));
+			Assert.IsTrue(l.All(Api).Any(l1 => l1.id == Settings.TestTeam));
 		}
 		[TestMethod]
 		public void UpdateTeam() {
@@ -203,7 +203,7 @@ for (int bitIndex = 0; bitIndex < bytes.Length * 8; bitIndex += 5) {
 		public void GetTeamsForUser() {
 			var o = User.GetById(Api, Settings.AdminUser).Result;
 			var l = RunTest(o.GetTeams(Api));
-			Assert.IsTrue(l.All(Api).Any(l => l.id == Settings.TestTeam));
+			Assert.IsTrue(l.All(Api).Any(l1 => l1.id == Settings.TestTeam));
 		}
 	}
 	[TestClass]
@@ -212,7 +212,7 @@ for (int bitIndex = 0; bitIndex < bytes.Length * 8; bitIndex += 5) {
 		public void GetChannels() {
 			var t = Team.GetById(Api, Settings.TestTeam).Result;
 			var l = RunTest(t.GetChannels(Api));
-			Assert.IsTrue(l.All(Api).Any(l => l.id == Settings.TestChannel));
+			Assert.IsTrue(l.All(Api).Any(l1 => l1.id == Settings.TestChannel));
 		}
 		[TestMethod]
 		public void GetChannelById() {
@@ -229,19 +229,19 @@ for (int bitIndex = 0; bitIndex < bytes.Length * 8; bitIndex += 5) {
 		public void SearchChannels() {
 			var t = Team.GetById(Api, Settings.TestTeam).Result;
 			var l = RunTest(t.SearchChannels(Api, Settings.TestChannelName));
-			Assert.IsTrue(l.All(Api).Any(l => l.id == Settings.TestChannel));
+			Assert.IsTrue(l.All(Api).Any(l1 => l1.id == Settings.TestChannel));
 		}
 		[TestMethod]
 		public void ChannelMembers() {
 			var t = Team.GetById(Api, Settings.TestTeam).Result;
 			var l = RunTest(t.ChannelMembersForUser(Api, Settings.AdminUser));
-			Assert.IsTrue(l.All(Api).Any(l => l.channel_id == Settings.TestChannel));
+			Assert.IsTrue(l.All(Api).Any(l1 => l1.channel_id == Settings.TestChannel));
 		}
 		[TestMethod]
 		public void GetChannelsForUser() {
 			var t = Team.GetById(Api, Settings.TestTeam).Result;
 			var l = RunTest(t.GetChannelsForUser(Api, Settings.AdminUser));
-			Assert.IsTrue(l.All(Api).Any(l => l.id == Settings.TestChannel));
+			Assert.IsTrue(l.All(Api).Any(l1 => l1.id == Settings.TestChannel));
 		}
 		[TestMethod]
 		public void CreateAndUpdateChannel() {
@@ -255,10 +255,10 @@ for (int bitIndex = 0; bitIndex < bytes.Length * 8; bitIndex += 5) {
 			Assert.AreEqual(display_name, o.display_name);
 			RunTest(o.AddUser(Api, Settings.TestUser));
 			var l = t.ChannelMembersForUser(Api, Settings.TestUser).Result;
-			Assert.IsTrue(l.All(Api).Any(l => l.channel_id == o.id));
+			Assert.IsTrue(l.All(Api).Any(l1 => l1.channel_id == o.id));
 			RunTest(o.RemoveUser(Api, Settings.TestUser));
 			l = t.ChannelMembersForUser(Api, Settings.TestUser).Result;
-			Assert.IsFalse(l.All(Api).Any(l => l.channel_id == o.id));
+			Assert.IsFalse(l.All(Api).Any(l1 => l1.channel_id == o.id));
 			o.name = UniqueId();
 			o.display_name = "Changed name";
 			var changed = RunTest(o.Update(Api));
@@ -270,7 +270,7 @@ for (int bitIndex = 0; bitIndex < bytes.Length * 8; bitIndex += 5) {
 		public void GetMembers() {
 			var c = Channel.GetById(Api, Settings.TestChannel).Result;
 			var l = RunTest(c.GetMembers(Api));
-			Assert.IsTrue(l.All(Api).Any(l => l.user_id == Settings.AdminUser));
+			Assert.IsTrue(l.All(Api).Any(l1 => l1.user_id == Settings.AdminUser));
 		}
 		[TestMethod]
 		public void GetUnreadMessages() {
