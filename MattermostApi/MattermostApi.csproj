@@ -12,8 +12,8 @@
     <PackageProjectUrl>https://github.com/nikkilocke/MattermostApi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nikkilocke/MattermostApi</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Add static UpdateRoles methods on Team and Channel</PackageReleaseNotes>
-    <Version>1.0.19</Version>
+    <PackageReleaseNotes>Fix missing $ in strings.</PackageReleaseNotes>
+    <Version>1.0.20</Version>
   </PropertyGroup>
 
   <ItemGroup>

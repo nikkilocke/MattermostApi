@@ -460,7 +460,7 @@ namespace MattermostApi {
 							message.Content = disposeMe.Add(new StringContent(content, Encoding.UTF8, "application/json"));
 						}
 					}
-					LastRequest = "{message}:{content}";
+					LastRequest = $"{message}:{content}";
 					HttpResponseMessage result;
 					int backoff = 500;
 					int delay;
