@@ -110,7 +110,11 @@ namespace MattermostApi {
 		}
 
 		public async Task RemoveUser(Api api, string user_id) {
-			await api.DeleteAsync(Api.Combine("channels", id, "members", user_id));
+			await RemoveUser(api, id, user_id);
+		}
+
+		static public async Task RemoveUser(Api api, string team_id, string user_id) {
+			await api.DeleteAsync<UserInTeam>(Api.Combine("channels", team_id, "members", user_id));
 		}
 
 		static public async Task UpdateRoles(Api api, string channel_id, string user_id, string roles) {

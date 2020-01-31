@@ -12,8 +12,9 @@
     <PackageProjectUrl>https://github.com/nikkilocke/MattermostApi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nikkilocke/MattermostApi</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Fix missing $ in strings.</PackageReleaseNotes>
-    <Version>1.0.20</Version>
+    <PackageReleaseNotes>Added Team.RemoveUser
+Added static Channel.Removeuser</PackageReleaseNotes>
+    <Version>1.0.22</Version>
   </PropertyGroup>
 
   <ItemGroup>
