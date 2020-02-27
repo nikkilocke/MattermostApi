@@ -86,6 +86,10 @@ namespace MattermostApi {
 			await api.DeleteAsync(Api.Combine("channels", id));
 		}
 
+		static public async Task<Channel> Restore(Api api, string id) {
+			return await api.PostAsync<Channel>(Api.Combine("channels", id, "restore"));
+		}
+
 		public async Task<Channel> MakePrivate(Api api) {
 			return await api.PostAsync<Channel>(Api.Combine("channels", id, "convert"));
 		}

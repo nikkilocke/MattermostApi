@@ -12,9 +12,8 @@
     <PackageProjectUrl>https://github.com/nikkilocke/MattermostApi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nikkilocke/MattermostApi</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Added Team.RemoveUser
-Added static Channel.Removeuser</PackageReleaseNotes>
-    <Version>1.0.22</Version>
+    <PackageReleaseNotes>Added static Channel.Restore</PackageReleaseNotes>
+    <Version>1.0.23</Version>
   </PropertyGroup>
 
   <ItemGroup>
