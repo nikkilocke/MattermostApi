@@ -39,6 +39,11 @@ namespace MattermostApi {
 		}
 
 		/// <summary>
+		/// HttpClient, so you can set a timeeout for long operations
+		/// </summary>
+		public HttpClient Client { get { return _client; } }
+
+		/// <summary>
 		/// The Settings object to use for this Api instance.
 		/// Will be Saved every time the AccessToken changes or is refreshed.
 		/// </summary>
@@ -283,10 +288,9 @@ namespace MattermostApi {
 			parms["code"] = code;
 			using (FormUrlEncodedContent content = new FormUrlEncodedContent(parms)) {
 				var result = await SendMessageAsync(HttpMethod.Post, Settings.ServerUri + "oauth/access_token", content);
-				Log(result.ToString());
 				Token token = result.ToObject<Token>();
 				if (string.IsNullOrEmpty(token.access_token))
-					throw new ApiException("No access token returned", result);
+					throw new ApiException(this, "No access token returned");
 				updateToken(token);
 			}
 		}
@@ -302,10 +306,9 @@ namespace MattermostApi {
 				client_secret = Settings.ClientSecret,
 				refresh_token = Settings.RefreshToken
 			});
-			Log(result.ToString());
 			Token token = result.ToObject<Token>();
 			if (string.IsNullOrEmpty(token.access_token))
-				throw new ApiException("No access token returned", result);
+				throw new ApiException(this, "No access token returned");
 			updateToken(token);
 		}
 
@@ -500,8 +503,8 @@ namespace MattermostApi {
 		/// </summary>
 		/// <param name="uri">To store in the MetaData</param>
 		async Task<JObject> parseJObjectFromResponse(string uri, HttpResponseMessage result) {
+			JObject j = null;
 			try {
-				JObject j = null;
 				string data = await result.Content.ReadAsStringAsync();
 				LastResponse += "\n" + data;
 				if (data.StartsWith("{")) {
@@ -520,18 +523,17 @@ namespace MattermostApi {
 					metadata["Error"] = j;
 				}
 				metadata["Uri"] = uri;
-				IEnumerable<string> values;
-				if (result.Headers.TryGetValues("Last-Modified", out values)) metadata["Modified"] = values.FirstOrDefault();
+				if (result.Headers.TryGetValues("Last-Modified", out IEnumerable<string> values))
+					metadata["Modified"] = values.FirstOrDefault();
 				j["MetaData"] = metadata;
-				if (Settings.LogResult > 0 || !result.IsSuccessStatusCode)
+				if (Settings.LogResult > 0)
 					Log("Received Data -> " + j);
-				if (!result.IsSuccessStatusCode)
-					throw new ApiException(result.ReasonPhrase, j);
-				return j;
 			} catch(Exception ex) {
-				Error($"{ex.Message}\n{LastRequest}\n{LastResponse}");
-				throw;
+				throw new ApiException(this, ex);
 			}
+			if (!result.IsSuccessStatusCode)
+				throw new ApiException(this, result.ReasonPhrase);
+			return j;
 		}
 
 		/// <summary>
@@ -539,10 +541,10 @@ namespace MattermostApi {
 		/// If it is an ApiEntry, and error is not empty, throw an exception.
 		/// </summary>
 		/// <typeparam name="T">Object to convert to</typeparam>
-		static T convertTo<T>(JObject j) where T : new() {
+		T convertTo<T>(JObject j) where T : new() {
 			T t = j.ConvertToObject<T>();
 			if (t is ApiEntry e && e.Error)
-				throw new ApiException(e.MetaData.Error.message, j);
+				throw new ApiException(this, e.MetaData.Error.message);
 			return t;
 		}
 
@@ -651,18 +653,18 @@ Content-Type: text/html; charset=UTF-8
 	/// Exception to hold more information when an API call fails
 	/// </summary>
 	public class ApiException : ApplicationException {
-		static string getMessage(string message, JObject result) {
-			string m = result["message"] + "";
-			if (!string.IsNullOrEmpty(m))
-				message = m;
-			return message;
+		public ApiException(Api api, Exception ex) : base(ex.Message, ex) {
+			Request = api.LastRequest;
+			Response = api.LastResponse;
 		}
-		public ApiException(string message, JObject result) : base(getMessage(message, result)) {
-			Result = result;
+		public ApiException(Api api, string message) : base(message) {
+			Request = api.LastRequest;
+			Response = api.LastResponse;
 		}
-		public JObject Result { get; private set; }
+		public string Request { get; private set; }
+		public string Response { get; private set; }
 		public override string ToString() {
-			return base.ToString() + "\r\nResult = " + Result;
+			return base.ToString() + "\r\nRequest = " + Request + "\r\nResult = " + Response;
 		}
 	}
 

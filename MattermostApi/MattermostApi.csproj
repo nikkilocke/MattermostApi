@@ -6,14 +6,15 @@
     <Authors>Trumphurst Ltd.</Authors>
     <Company>Trumphurst Ltd.Trumphurst Ltd.</Company>
     <Description>C# Api to Mattermost</Description>
-    <Copyright>(c) 2019 Trumphurst Ltd.</Copyright>
+    <Copyright>(c) 2019-2020 Trumphurst Ltd.</Copyright>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
     <PackageTags>Mattermost Api C#</PackageTags>
     <PackageProjectUrl>https://github.com/nikkilocke/MattermostApi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nikkilocke/MattermostApi</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Added static Channel.Restore</PackageReleaseNotes>
-    <Version>1.0.23</Version>
+    <PackageReleaseNotes>LastRequest and LastResponse returned in Exceptions thrown, rather than always logged when there is an error.
+</PackageReleaseNotes>
+    <Version>1.0.24</Version>
   </PropertyGroup>
 
   <ItemGroup>
