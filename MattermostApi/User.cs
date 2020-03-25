@@ -118,19 +118,19 @@ namespace MattermostApi {
 			return await api.GetAsync<ApiList<User>>("users", query);
 		}
 
-		public static async Task<ApiList<User>> GetAllById(Api api, params string [] ids) {
-			return await api.PostAsync<ApiList<User>>("users", null, ids);
+		public static async Task<PlainList<User>> GetAllById(Api api, params string [] ids) {
+			return await api.PostAsync<PlainList<User>>("users", null, ids);
 		}
 
-		public static async Task<ApiList<User>> GetAllByName(Api api, params string[] names) {
-			return await api.PostAsync<ApiList<User>>("users/usernames", null, names);
+		public static async Task<PlainList<User>> GetAllByName(Api api, params string[] names) {
+			return await api.PostAsync<PlainList<User>>("users/usernames", null, names);
 		}
 
-		public static async Task<ApiList<User>> Search(Api api, string term, SearchUsersQuery query = null) {
+		public static async Task<PlainList<User>> Search(Api api, string term, SearchUsersQuery query = null) {
 			if (query == null)
 				query = new SearchUsersQuery();
 			query.term = term;
-			return await api.PostAsync<ApiList<User>>("users/search", null, query);
+			return await api.PostAsync<PlainList<User>>("users/search", null, query);
 		}
 
 		public static async Task<User> GetById(Api api, string id) {
@@ -163,12 +163,12 @@ namespace MattermostApi {
 			await api.DeleteAsync(Api.Combine("users", id));
 		}
 
-		public static async Task<ApiList<TeamForUser>> GetTeams(Api api, string userId, ListRequest request = null) {
-			return await api.GetAsync<ApiList<TeamForUser>>(Api.Combine("users", userId, "teams"), request);
+		public static async Task<PlainList<TeamForUser>> GetTeams(Api api, string userId) {
+			return await api.GetAsync<PlainList<TeamForUser>>(Api.Combine("users", userId, "teams"));
 		}
 
-		public async Task<ApiList<TeamForUser>> GetTeams(Api api, ListRequest request = null) {
-			return await GetTeams(api, id, request);
+		public async Task<PlainList<TeamForUser>> GetTeams(Api api) {
+			return await GetTeams(api, id);
 		}
 
 		public async Task UpdateRoles(Api api, string channel_id, string roles) {
@@ -181,8 +181,8 @@ namespace MattermostApi {
 			return await api.GetAsync<ApiList<UserInChannel>>(Api.Combine("users", id, "teams", team_id, "channels", "members"));
 		}
 
-		public async Task<ApiList<Channel>> ChannelsForTeam(Api api, string team_id) {
-			return await api.GetAsync<ApiList<Channel>>(Api.Combine("users", id, "teams", team_id, "channels"));
+		public async Task<PlainList<Channel>> ChannelsForTeam(Api api, string team_id) {
+			return await api.GetAsync<PlainList<Channel>>(Api.Combine("users", id, "teams", team_id, "channels"));
 		}
 
 		public async Task<UnreadMessageCount> GetUnreadMessages(Api api, string channel_id) {

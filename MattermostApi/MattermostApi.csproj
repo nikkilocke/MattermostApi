@@ -12,9 +12,9 @@
     <PackageProjectUrl>https://github.com/nikkilocke/MattermostApi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nikkilocke/MattermostApi</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>LastRequest and LastResponse returned in Exceptions thrown, rather than always logged when there is an error.
+    <PackageReleaseNotes>Fixed bug where Api wrapper assumed list requests were paged, and they weren't.
 </PackageReleaseNotes>
-    <Version>1.0.24</Version>
+    <Version>1.0.25</Version>
   </PropertyGroup>
 
   <ItemGroup>

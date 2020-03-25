@@ -40,10 +40,8 @@ namespace MattermostApi {
 			return await api.GetAsync<ApiList<Team>>("teams", page);
 		}
 
-		static async public Task<ApiList<Team>> GetTeamsForUser(Api api, string userId, ListRequest page = null) {
-			if (page == null)
-				page = new ListRequest();
-			return await api.GetAsync<ApiList<Team>>(Api.Combine("users", userId, "teams"), page);
+		static async public Task<PlainList<Team>> GetTeamsForUser(Api api, string userId) {
+			return await api.GetAsync<PlainList<Team>>(Api.Combine("users", userId, "teams"));
 		}
 
 		static async public Task<Team> GetById(Api api, string id) {
@@ -76,20 +74,16 @@ namespace MattermostApi {
 			return await GetMembers(api, id, request);
 		}
 
-		static async public Task<ApiList<UserInTeam>> GetMembersByIds(Api api, string teamId, ListRequest request, params string [] userIds) {
-			return await api.PostAsync<ApiList<UserInTeam>>(Api.Combine("teams", teamId, "members", "ids"), request, userIds);
-		}
-
-		static async public Task<ApiList<UserInTeam>> GetMembersByIds(Api api, string teamId, params string[] userIds) {
-			return await GetMembersByIds(api, teamId, null, userIds);
+		static async public Task<PlainList<UserInTeam>> GetMembersByIds(Api api, string teamId, params string [] userIds) {
+			return await api.PostAsync<PlainList<UserInTeam>>(Api.Combine("teams", teamId, "members", "ids"), userIds);
 		}
 
 		public async Task<Channel> CreateChannel(Api api, string name, string display_name, bool closed = false, string purpose = null, string header = null) {
 			return await Channel.Create(api, id, name, display_name, closed, purpose, header);
 		}
 
-		public async Task<ApiList<Channel>> GetChannels(Api api, ListRequest request = null) {
-			return await api.GetAsync<ApiList<Channel>>(Api.Combine("teams", id, "channels"), request);
+		public async Task<PlainList<Channel>> GetChannels(Api api) {
+			return await api.GetAsync<PlainList<Channel>>(Api.Combine("teams", id, "channels"));
 		}
 
 		public async Task<ApiList<Channel>> SearchChannels(Api api, string term, ListRequest request = null) {
@@ -106,8 +100,8 @@ namespace MattermostApi {
 			return await api.GetAsync<ApiList<UserInChannel>>(Api.Combine("users", user_id, "teams", id, "channels", "members"));
 		}
 
-		public async Task<ApiList<Channel>> GetChannelsForUser(Api api, string user_id) {
-			return await api.GetAsync<ApiList<Channel>>(Api.Combine("users", user_id, "teams", id, "channels"));
+		public async Task<PlainList<Channel>> GetChannelsForUser(Api api, string user_id) {
+			return await api.GetAsync<PlainList<Channel>>(Api.Combine("users", user_id, "teams", id, "channels"));
 		}
 
 		public async Task<UserInTeam> AddUser(Api api, string user_id) {

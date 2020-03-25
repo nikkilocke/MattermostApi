@@ -197,6 +197,31 @@ namespace MattermostApi {
 
 	}
 	/// <summary>
+	/// Standard Api call single page List return
+	/// </summary>
+	/// <typeparam name="T">The type of item in the List</typeparam>
+	public class PlainList<T> : ApiEntry where T : new() {
+		public static PlainList<T> EmptyList(string uri) {
+			PlainList<T> list = new PlainList<T> {
+				MetaData = new MetaData() { Uri = uri }
+			};
+			return list;
+		}
+		/// <summary>
+		/// List of items
+		/// </summary>
+		public List<T> List = new List<T>();
+
+		/// <summary>
+		/// Number of items retrieved in this chunk.
+		/// </summary>
+		public int Count {
+			get { return List.Count; }
+		}
+
+	}
+
+	/// <summary>
 	/// Standard Api call List return
 	/// </summary>
 	/// <typeparam name="T">The type of item in the List</typeparam>

@@ -103,15 +103,12 @@ for (int bitIndex = 0; bitIndex < bytes.Length * 8; bitIndex += 5) {
 	public class BugTests : TestBase {
 		[TestMethod]
 		public void Bug() {
-			RunTest(Api.LoginAsync(Settings.Login, Settings.Password));
-			var l = RunTest(User.Search(Api, "basecamp_bot"));
-			var bcb = l.List.First();
-			var team = RunTest(Team.GetByName(Api, "UK"));
-			RunTest(Team.AddUser(Api, team.id, bcb.id));
-			RunTest(Team.AddUser(Api, team.id, bcb.id));
-			l = RunTest(User.Search(Api, "xrukadmin"));
-			var admin = l.List.First();
-			RunTest(Team.AddUser(Api, team.id, admin.id));
+			var u = RunTest(Api.LoginAsync(Settings.Login, Settings.Password));
+			Team t = RunTest(Team.GetById(Api, "j3x94gd5q3f79q1y9os9ddtuho"));
+			PlainList<Channel> channels = RunTest(u.ChannelsForTeam(Api, t.id));
+			foreach (Channel c in channels.List) {
+				Console.WriteLine($"{c.id}:{c.name}");
+			}
 		}
 	}
 	[TestClass]
@@ -182,7 +179,7 @@ for (int bitIndex = 0; bitIndex < bytes.Length * 8; bitIndex += 5) {
 		[TestMethod]
 		public void SearchUsers() {
 			var l = RunTest(User.Search(Api, Settings.AdminUserName));
-			Assert.IsTrue(l.All(Api).Any(u => u.id == Settings.AdminUser));
+			Assert.IsTrue(l.List.Any(u => u.id == Settings.AdminUser));
 		}
 		[TestMethod]
 		public void GetUserById() {
@@ -203,7 +200,7 @@ for (int bitIndex = 0; bitIndex < bytes.Length * 8; bitIndex += 5) {
 		public void GetTeamsForUser() {
 			var o = User.GetById(Api, Settings.AdminUser).Result;
 			var l = RunTest(o.GetTeams(Api));
-			Assert.IsTrue(l.All(Api).Any(l1 => l1.id == Settings.TestTeam));
+			Assert.IsTrue(l.List.Any(l1 => l1.id == Settings.TestTeam));
 		}
 	}
 	[TestClass]
@@ -212,7 +209,7 @@ for (int bitIndex = 0; bitIndex < bytes.Length * 8; bitIndex += 5) {
 		public void GetChannels() {
 			var t = Team.GetById(Api, Settings.TestTeam).Result;
 			var l = RunTest(t.GetChannels(Api));
-			Assert.IsTrue(l.All(Api).Any(l1 => l1.id == Settings.TestChannel));
+			Assert.IsTrue(l.List.Any(l1 => l1.id == Settings.TestChannel));
 		}
 		[TestMethod]
 		public void GetChannelById() {
@@ -241,7 +238,7 @@ for (int bitIndex = 0; bitIndex < bytes.Length * 8; bitIndex += 5) {
 		public void GetChannelsForUser() {
 			var t = Team.GetById(Api, Settings.TestTeam).Result;
 			var l = RunTest(t.GetChannelsForUser(Api, Settings.AdminUser));
-			Assert.IsTrue(l.All(Api).Any(l1 => l1.id == Settings.TestChannel));
+			Assert.IsTrue(l.List.Any(l1 => l1.id == Settings.TestChannel));
 		}
 		[TestMethod]
 		public void CreateAndUpdateChannel() {
