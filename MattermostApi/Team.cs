@@ -75,7 +75,7 @@ namespace MattermostApi {
 		}
 
 		static async public Task<PlainList<UserInTeam>> GetMembersByIds(Api api, string teamId, params string [] userIds) {
-			return await api.PostAsync<PlainList<UserInTeam>>(Api.Combine("teams", teamId, "members", "ids"), userIds);
+			return await api.PostAsync<PlainList<UserInTeam>>(Api.Combine("teams", teamId, "members", "ids"), null, userIds);
 		}
 
 		public async Task<Channel> CreateChannel(Api api, string name, string display_name, bool closed = false, string purpose = null, string header = null) {

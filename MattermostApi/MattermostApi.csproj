@@ -12,9 +12,9 @@
     <PackageProjectUrl>https://github.com/nikkilocke/MattermostApi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nikkilocke/MattermostApi</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Fixed bug where Api wrapper assumed list requests were paged, and they weren't.
+    <PackageReleaseNotes>Fixed bug where a post parameter was mistakenly passed as a get parameter in Team.GetMembersbyIds
 </PackageReleaseNotes>
-    <Version>1.0.25</Version>
+    <Version>1.0.26</Version>
   </PropertyGroup>
 
   <ItemGroup>
