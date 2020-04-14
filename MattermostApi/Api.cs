@@ -504,11 +504,15 @@ namespace MattermostApi {
 		/// <param name="uri">To store in the MetaData</param>
 		async Task<JObject> parseJObjectFromResponse(string uri, HttpResponseMessage result) {
 			JObject j = null;
+			string message = result.ReasonPhrase;
 			try {
 				string data = await result.Content.ReadAsStringAsync();
 				LastResponse += "\n" + data;
 				if (data.StartsWith("{")) {
 					j = JObject.Parse(data);
+					string m = j["message"] + "";
+					if (!string.IsNullOrEmpty(m))
+						message = m;
 				} else if (data.StartsWith("[")) {
 					j = new JObject {
 						["List"] = JArray.Parse(data)
@@ -532,7 +536,7 @@ namespace MattermostApi {
 				throw new ApiException(this, ex);
 			}
 			if (!result.IsSuccessStatusCode)
-				throw new ApiException(this, result.ReasonPhrase);
+				throw new ApiException(this, message);
 			return j;
 		}
 
