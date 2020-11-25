@@ -174,9 +174,9 @@ namespace MattermostApi {
 	}
 	public class ApiEntryWithId : ApiEntry {
 		public string id;
-		public DateTime create_at;
-		public DateTime update_at;
-		public DateTime delete_at;
+		public DateTime? create_at;
+		public DateTime? update_at;
+		public DateTime? delete_at;
 	}
 
 	/// <summary>

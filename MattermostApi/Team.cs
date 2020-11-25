@@ -8,7 +8,7 @@ namespace MattermostApi {
 		public string team_id;
 		public string user_id;
 		public string roles;
-		public DateTime delete_at;
+		public DateTime? delete_at;
 		public bool scheme_user;
 		public bool scheme_admin;
 		public string explicit_roles;
@@ -82,8 +82,16 @@ namespace MattermostApi {
 			return await Channel.Create(api, id, name, display_name, closed, purpose, header);
 		}
 
-		public async Task<PlainList<Channel>> GetChannels(Api api) {
-			return await api.GetAsync<PlainList<Channel>>(Api.Combine("teams", id, "channels"));
+		public async Task<ApiList<Channel>> GetChannels(Api api) {
+			return await api.GetAsync<ApiList<Channel>>(Api.Combine("teams", id, "channels"));
+		}
+
+		public async Task<ApiList<Channel>> GetPrivateChannels(Api api) {
+			return await api.GetAsync<ApiList<Channel>>(Api.Combine("teams", id, "channels", "private"));
+		}
+
+		public async Task<ApiList<Channel>> GetArchivedChannels(Api api) {
+			return await api.GetAsync<ApiList<Channel>>(Api.Combine("teams", id, "channels", "deleted"));
 		}
 
 		public async Task<ApiList<Channel>> SearchChannels(Api api, string term, ListRequest request = null) {
@@ -100,8 +108,10 @@ namespace MattermostApi {
 			return await api.GetAsync<ApiList<UserInChannel>>(Api.Combine("users", user_id, "teams", id, "channels", "members"));
 		}
 
-		public async Task<PlainList<Channel>> GetChannelsForUser(Api api, string user_id) {
-			return await api.GetAsync<PlainList<Channel>>(Api.Combine("users", user_id, "teams", id, "channels"));
+		public async Task<PlainList<Channel>> GetChannelsForUser(Api api, string user_id, bool include_deleted = false) {
+			return await api.GetAsync<PlainList<Channel>>(Api.Combine("users", user_id, "teams", id, "channels"), new {
+				include_deleted
+			});
 		}
 
 		public async Task<UserInTeam> AddUser(Api api, string user_id) {
