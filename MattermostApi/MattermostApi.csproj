@@ -12,11 +12,9 @@
     <PackageProjectUrl>https://github.com/nikkilocke/MattermostApi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nikkilocke/MattermostApi</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Fix bug Team.GetChannels returns an ApiList not a PlainList.
-Add Team.GetPrivateChannels and Team.GetArchivedChannels.
-Change create/update/delete dates to nullable dates.
+    <PackageReleaseNotes>Rename GetArchivedChannels to GetDeletedChannels, for that is what it does.
 </PackageReleaseNotes>
-    <Version>1.0.28</Version>
+    <Version>1.0.29</Version>
   </PropertyGroup>
 
   <ItemGroup>

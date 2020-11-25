@@ -90,7 +90,7 @@ namespace MattermostApi {
 			return await api.GetAsync<ApiList<Channel>>(Api.Combine("teams", id, "channels", "private"));
 		}
 
-		public async Task<ApiList<Channel>> GetArchivedChannels(Api api) {
+		public async Task<ApiList<Channel>> GetDeletedChannels(Api api) {
 			return await api.GetAsync<ApiList<Channel>>(Api.Combine("teams", id, "channels", "deleted"));
 		}
 
