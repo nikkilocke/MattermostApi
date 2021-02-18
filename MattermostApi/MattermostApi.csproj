@@ -12,9 +12,9 @@
     <PackageProjectUrl>https://github.com/nikkilocke/MattermostApi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nikkilocke/MattermostApi</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Rename GetArchivedChannels to GetDeletedChannels, for that is what it does.
+    <PackageReleaseNotes>Added comments and other members to NotifyProps. Some changed to bool? where appropriate
 </PackageReleaseNotes>
-    <Version>1.0.29</Version>
+    <Version>1.0.30</Version>
   </PropertyGroup>
 
   <ItemGroup>
