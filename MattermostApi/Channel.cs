@@ -40,10 +40,10 @@ namespace MattermostApi {
 		public string user_id;
 		public string name;
 		public string extension;
-		public int size;
+		public int? size;
 		public string mime_type;
-		public int width;
-		public int height;
+		public int? width;
+		public int? height;
 		public bool has_preview_image;
 	}
 

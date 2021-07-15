@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
@@ -58,7 +59,7 @@ namespace MattermostApi {
 	}
 
 	public class Post : ApiEntryWithId {
-		public DateTime edit_at;
+		public DateTime? edit_at;
 		public string user_id;
 		public string channel_id;
 		public string root_id;
@@ -67,14 +68,17 @@ namespace MattermostApi {
 		public string message;
 		public string type;
 		public JToken props;
+		public bool? is_pinned;
 		public string hashtag;
+		public string hashtags;
+		public int? reply_count;
 		public string[] filenames;
 		public string[] file_ids;
 		public string pending_post_id;
 		public PostData metadata;
 
-		static async public Task<Post> Create(Api api, string channel_id, string message, string root_id = null, JObject props = null, 
-			params string [] file_ids) {
+		static async public Task<Post> Create(Api api, string channel_id, string message, string root_id = null, JObject props = null,
+			params string[] file_ids) {
 			return await api.PostAsync<Post>("posts", null, new {
 				channel_id,
 				message,
@@ -138,5 +142,14 @@ namespace MattermostApi {
 			await api.PostAsync(Api.Combine("posts", id, "actions", action_id));
 		}
 
+		async public Task<FileInfo> GetFileInfo(Api api, string file_id) {
+			return await api.GetAsync<FileInfo>(Api.Combine("files", file_id, "info"));
+		}
+
+		async public Task GetFile(Api api, string file_id, System.IO.Stream copyTo) {
+			using (HttpResponseMessage m = await api.SendMessageAsyncAndGetResponse(HttpMethod.Get, api.MakeUri(Api.Combine("files", file_id)))) {
+				await m.Content.CopyToAsync(copyTo);
+			}
+		}
 	}
 }

@@ -118,7 +118,7 @@ namespace MattermostApi {
 		/// <param name="postParameters">Any post parameters to pass (in an object or JObject)</param>
 		public async Task<JObject> PostAsync(string application, object getParameters = null, object postParameters = null) {
 			await LoginOrRefreshIfRequiredAsync();
-			string uri = makeUri(application);
+			string uri = MakeUri(application);
 			uri = AddGetParams(uri, getParameters);
 			return await SendMessageAsync(HttpMethod.Post, uri, postParameters);
 		}
@@ -143,7 +143,7 @@ namespace MattermostApi {
 		/// <param name="getParameters">Any get parameters to pass (in an object or JObject)</param>
 		public async Task<JObject> GetAsync(string application, object getParameters = null) {
 			await LoginOrRefreshIfRequiredAsync();
-			string uri = makeUri(application);
+			string uri = MakeUri(application);
 			uri = AddGetParams(uri, getParameters);
 			return await SendMessageAsync(HttpMethod.Get, uri);
 		}
@@ -168,7 +168,7 @@ namespace MattermostApi {
 		/// <param name="postParameters">Any post parameters to pass (in an object or JObject)</param>
 		public async Task<JObject> PutAsync(string application, object getParameters = null, object postParameters = null) {
 			await LoginOrRefreshIfRequiredAsync();
-			string uri = makeUri(application);
+			string uri = MakeUri(application);
 			uri = AddGetParams(uri, getParameters);
 			return await SendMessageAsync(HttpMethod.Put, uri, postParameters);
 		}
@@ -192,7 +192,7 @@ namespace MattermostApi {
 		/// <param name="getParameters">Any get parameters to pass (in an object or JObject)</param>
 		public async Task<JObject> DeleteAsync(string application, object getParameters = null) {
 			await LoginOrRefreshIfRequiredAsync();
-			string uri = makeUri(application);
+			string uri = MakeUri(application);
 			uri = AddGetParams(uri, getParameters);
 			return await SendMessageAsync(HttpMethod.Delete, uri);
 		}
@@ -219,7 +219,7 @@ namespace MattermostApi {
 		/// </param>
 		/// <returns>The result as a JObject, with MetaData filled in.</returns>
 		public async Task<JObject> PostFormAsync(string application, object getParameters, object postParameters, params string[] fileParameterNames) {
-			string uri = AddGetParams(makeUri(application), getParameters);
+			string uri = AddGetParams(MakeUri(application), getParameters);
 			using (DisposableCollection objectsToDispose = new DisposableCollection()) { 
 				MultipartFormDataContent content = objectsToDispose.Add(new MultipartFormDataContent());
 				JObject data = postParameters.ToJObject();
@@ -245,7 +245,7 @@ namespace MattermostApi {
 		/// Log in - sends username and password and updates Settings with the Token returned.
 		/// </summary>
 		public async Task<User> LoginAsync(string login_id, string password) {
-			string uri = makeUri("users/login");
+			string uri = MakeUri("users/login");
 			using (HttpResponseMessage result = await SendMessageAsyncAndGetResponse(HttpMethod.Post, uri, new {
 				login_id,
 				password
@@ -647,7 +647,7 @@ Content-Type: text/html; charset=UTF-8
 		/// Make the standard Uri (put BaseUri and CompanyId on the front)
 		/// </summary>
 		/// <param name="application">The remainder of the Uri</param>
-		protected string makeUri(string application) {
+		public string MakeUri(string application) {
 			return _http.IsMatch(application) ? application : Settings.ServerUri + "api/v4/" + application;
 		}
 
