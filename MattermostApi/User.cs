@@ -6,15 +6,15 @@ using Newtonsoft.Json.Linq;
 
 namespace MattermostApi {
 	public class NotifyProps : ApiEntryBase {
-		public bool? auto_responder_active;
+		public string auto_responder_active;
 		public string auto_responder_message;
-		public bool? channel;
+		public string channel;
 		public string comments;
 		public string desktop;
 		public string desktop_notification_sound;
-		public bool? desktop_sound;
+		public string desktop_sound;
 		public string email;
-		public bool? first_name;
+		public string first_name;
 		public string mention_keys;
 		public string push;
 		public string push_status;

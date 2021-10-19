@@ -12,9 +12,9 @@
     <PackageProjectUrl>https://github.com/nikkilocke/MattermostApi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nikkilocke/MattermostApi</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Made email field in NotifyProps a string instead of bool?, as it is not recognised by the server if set to false.
+    <PackageReleaseNotes>Made bool? fields in NotifyProps a string instead of bool?, as they are not recognised by the server if set to false.
 </PackageReleaseNotes>
-    <Version>1.0.34</Version>
+    <Version>1.0.35</Version>
   </PropertyGroup>
 
   <ItemGroup>
