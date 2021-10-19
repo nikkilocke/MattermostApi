@@ -13,7 +13,7 @@ namespace MattermostApi {
 		public string desktop;
 		public string desktop_notification_sound;
 		public bool? desktop_sound;
-		public bool? email;
+		public string email;
 		public bool? first_name;
 		public string mention_keys;
 		public string push;

@@ -12,11 +12,9 @@
     <PackageProjectUrl>https://github.com/nikkilocke/MattermostApi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nikkilocke/MattermostApi</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Added extra fields to Post object, and methods to get file info and download file, given file_id.
-MakeUri becomes public.
-Post.edit_at corrected to DateTime?
+    <PackageReleaseNotes>Made email field in NotifyProps a string instead of bool?, as it is not recognised by the server if set to false.
 </PackageReleaseNotes>
-    <Version>1.0.33</Version>
+    <Version>1.0.34</Version>
   </PropertyGroup>
 
   <ItemGroup>
