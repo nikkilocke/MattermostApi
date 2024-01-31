@@ -475,7 +475,8 @@ namespace MattermostApi {
 						Log($"Received -> {result}");
 					switch (result.StatusCode) {
 						case HttpStatusCode.Found:      // Redirect
-							uri = result.Headers.Location.AbsoluteUri;
+						case HttpStatusCode.MovedPermanently:
+							uri = new Uri(message.RequestUri, result.Headers.Location).AbsoluteUri;
 							delay = 1;
 							break;
 						case (HttpStatusCode)429:       // TooManyRequests

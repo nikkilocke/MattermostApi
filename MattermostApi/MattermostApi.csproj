@@ -12,9 +12,9 @@
     <PackageProjectUrl>https://github.com/nikkilocke/MattermostApi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nikkilocke/MattermostApi</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Made bool? fields in NotifyProps a string instead of bool?, as they are not recognised by the server if set to false.
+    <PackageReleaseNotes>Handle 301 Moved Permanently response from Mattermost
 </PackageReleaseNotes>
-    <Version>1.0.35</Version>
+    <Version>1.0.37</Version>
   </PropertyGroup>
 
   <ItemGroup>
